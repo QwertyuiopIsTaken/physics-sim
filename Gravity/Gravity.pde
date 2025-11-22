@@ -9,14 +9,14 @@ float currentMass = 10;
 
 float DT = 0.05; // time step (frames per update)
 
-final float G_SIM = 20000;
+final float G_SIM = 100000;
 
 Planet selected = null;
 boolean draggingVelocity = false;
 
 void setup() {
-  size(900, 750);
-  frameRate(240);
+  size(1240, 720);
+  frameRate(120);
   planets = new ArrayList<>();
 }
 
@@ -145,7 +145,7 @@ void mousePressed() {
 void mouseReleased() {
   if (draggingVelocity && selected != null) {
     // Apply the velocity to the planet
-    selected.velocity = selected.velocityPreview.copy().mult(0.04);
+    selected.velocity = selected.velocityPreview.copy().mult(0.035);
     draggingVelocity = false;
     selected = null;
   }
