@@ -2,10 +2,23 @@
 
 Collection of simple physic simulations created from Newtonian mechanics.
 
+* [DynamicField](#dynamic-field)
 * [Jelly](#jelly)
 * [N-Body Problem](#n-body-problem)
 * [Gravity](#gravity)
 * [Pressure](#pressure)
+
+## Dynamic Field
+
+Simulates a dynamic field that demonstrates the finite speed of light.
+
+Particles can be moved around to change the gradient of the electric field.
+
+### Controls
+
+* **Mouse Dragged**: Moves a particle that is being hovered over to the mouse's position (Note: Speed is limited by the frame rate)
+* **Mouse Left Click**: Creates a positive particle at the mouse's location
+* **Mouse Right Click**: Creates a negative particle at the mouse's location
 
 ## Jelly
 
@@ -17,7 +30,7 @@ This simulation, however, can be improved by adding self collision to prevent th
 
 ### Controls
 
-* **Mouse Left Click**: When hovering over an orb, moves it to the mouse's position
+* **Mouse Dragged**: Moves an orb that is being hovered over to the mouse's position
 
 ***
 
@@ -37,7 +50,7 @@ While this simulation is not entirely precise, it models the general picture of 
 * **R**: Returns to setup mode
 * **1,2,3,4,5**: Selects preset systems
 * **Enter**: Starts simulation mode
-* **Mouse Left Click**: When hovering over an object, creates an initial velocity
+* **Mouse Dragged**: Creates an initial velocity over an object that is being hovered over
 
 ***
 
@@ -55,7 +68,7 @@ Unlike the previous simulation, this one uses leapfrog integration to increase t
 * **R**: Returns to setup mode
 * **1,2,3,4,5**: Selects preset systems
 * **Enter**: Starts simulation mode
-* **Mouse Left Click**: When hovering over an object, creates an initial velocity
+* **Mouse Left Click**: Creates an initial velocity over an object that is being hovered over
 
 ***
 
@@ -75,5 +88,5 @@ A bit of energy is loss when colliding with the borders, which can be changed. Y
 
 ## Installation
 
-1. Install Processing
+1. Install [Processing](https://processing.org/download)
 2. Run the corresponding driver file for each folder
