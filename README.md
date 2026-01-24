@@ -14,13 +14,15 @@ Simulates a dynamic field that demonstrates the finite speed of light.
 
 Particles can be moved around to change the gradient of the electric field.
 
-<img src="/assets/dynamic-field.gif" alt="Dynamic field demo" width="640" height="360" />
+<img src="/assets/dynamic-field.gif" alt="Dynamic field demo" width="640" height="360"/>
 
 ### Controls
 
 * **Mouse Dragged**: Moves a particle that is being hovered over to the mouse's position (Note: Speed is limited by the frame rate)
 * **Mouse Left Click**: Creates a positive particle at the mouse's location
 * **Mouse Right Click**: Creates a negative particle at the mouse's location
+
+***
 
 ## Jelly
 
@@ -29,6 +31,8 @@ Simulates soft-body matter using spring force.
 A grid of orbs/particles are connected to its adjacent and diagonal neighbors. The diagonal spring creates a shear force that prevents the block from collapsing on itself.
 
 This simulation, however, can be improved by adding self collision to prevent the orbs from going pass a certain length.
+
+<img src="/assets/jelly.gif" alt="Jelly simulation demo" width="360" height="360"/>
 
 ### Controls
 
