@@ -14,6 +14,8 @@ Simulates a dynamic field that demonstrates the finite speed of light.
 
 Particles can be moved around to change the gradient of the electric field.
 
+<img src="/assets/dynamic-field.gif" alt="Dynamic field demo" width="640" height="360" />
+
 ### Controls
 
 * **Mouse Dragged**: Moves a particle that is being hovered over to the mouse's position (Note: Speed is limited by the frame rate)
