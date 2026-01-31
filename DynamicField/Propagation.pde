@@ -3,11 +3,15 @@ class Propagation {
   PVector pos;
   float sourceCharge;
   boolean propagate;
+  int frame;
+  int lifespan;
   
-  Propagation(float x, float y, float charge, boolean propagate) {
+  Propagation(float x, float y, float charge, boolean propagate, int lifespan) {
     this.pos = new PVector(x, y);
     this.sourceCharge = charge;
     this.propagate = propagate;
+    this.frame = frameCount;
+    this.lifespan = lifespan;
   }
   
   void display() {
