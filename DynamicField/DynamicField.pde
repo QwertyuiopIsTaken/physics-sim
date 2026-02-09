@@ -1,10 +1,9 @@
-import java.util.Iterator;
 Utility ut = new Utility();
 
-final int FIELD_INTERVALS = 20;
+final int FIELD_INTERVALS = 25;
 final int ARROW_HEAD_SIZE = 5;
 final int ARROW_LENGTH = 15;
-final boolean OPTIMIZE = true; // turn off optimization for increased accuracy
+final boolean OPTIMIZE = false; // turn off optimization for increased accuracy
 final boolean DISPLAY_WAVE = false;
 int WAVE_LIFESPAN;
 
@@ -16,7 +15,7 @@ Particle selected = null;
 
 void setup() {
   size(1200, 800);
-  frameRate(240);
+  frameRate(120);
   
   fieldPoints = new FieldPoint[width/FIELD_INTERVALS + 1][height/FIELD_INTERVALS + 1];
   WAVE_LIFESPAN = max(width, height);
@@ -32,27 +31,25 @@ void draw() {
       }
       
       PVector fieldPos = new PVector(i * FIELD_INTERVALS, j * FIELD_INTERVALS);
-      
       PVector netForce = fieldPoints[i][j].netForce;
       ut.drawArrow(fieldPos, netForce, ARROW_HEAD_SIZE, ARROW_LENGTH);
     }
   }
   
-  for (Particle p : particles) {
-    p.display();
-  }
-  
-  Iterator<Propagation> iterator = props.iterator();
-  while (iterator.hasNext()) {
-    Propagation pr = iterator.next();
+  for (int i = props.size() - 1; i >= 0; i--) {
+    Propagation pr = props.get(i);
     if (pr.radius >= pr.lifespan) {
-      iterator.remove();
+      props.remove(i);
     } else {
       if (DISPLAY_WAVE) {
         pr.display();
       }
       pr.radius++;
     }
+  }
+  
+  for (Particle p : particles) {
+    p.display();
   }
   
   dragParticle();
@@ -95,15 +92,30 @@ void dragParticle() {
 }
 
 void updateField() {
-  for (int i = 0; i < fieldPoints.length; i++) {
-    for (int j = 0; j < fieldPoints[0].length; j++) {
-      PVector fieldPos = new PVector(i * FIELD_INTERVALS, j * FIELD_INTERVALS);
-      
-      for (Propagation pr : props) {
+  for (Propagation pr : props) {
+    float minX = pr.pos.x - pr.radius;
+    float maxX = pr.pos.x + pr.radius;
+    float minY = pr.pos.y - pr.radius;
+    float maxY = pr.pos.y + pr.radius;
+    
+    int col = fieldPoints.length - 1;
+    int row = fieldPoints[0].length - 1;
+    
+    int startI = max(0, floor(minX / FIELD_INTERVALS));
+    int endI = min(col, ceil(maxX / FIELD_INTERVALS));
+    
+    int startJ = max(0, floor(minY / FIELD_INTERVALS));
+    int endJ = min(row, ceil(maxY / FIELD_INTERVALS));
+    
+    for (int i = startI; i <= endI; i++) {
+      for (int j = startJ; j <= endJ; j++) {
+        PVector fieldPos = new PVector(i * FIELD_INTERVALS, j * FIELD_INTERVALS);
         if (pr.containsPoint(fieldPos.x, fieldPos.y)) {
-          PVector netForce = new PVector(0, 0);
+          PVector netForce;
           if (fieldPoints[i][j] != null) {
             netForce = fieldPoints[i][j].netForce;
+          } else {
+            netForce = new PVector(0, 0);
           }
           
           netForce.add(ut.calcElectrostaticForce(pr.sourceCharge, pr.pos, fieldPos));
@@ -121,19 +133,19 @@ void mouseReleased() {
 }
 
 void mousePressed() {
-  for (Particle p : particles) {
-    if (p.isClicked(mouseX, mouseY)) {
-      selected = p;
-      return;
+  if (mouseButton == LEFT) {
+    for (Particle p : particles) {
+      if (p.isClicked(mouseX, mouseY)) {
+        selected = p;
+        return;
+      }
     }
   }
   
-  if (mouseButton == LEFT) {
-    particles.add(new Particle(mouseX, mouseY, 5));
-    
-  } else {
-    particles.add(new Particle(mouseX, mouseY, -5));
+  float charge = 5;
+  if (mouseButton == RIGHT) {
+    charge = -5;
   }
-  float charge = particles.get(particles.size() - 1).charge;
+  particles.add(new Particle(mouseX, mouseY, charge));
   props.add(new Propagation(mouseX, mouseY, charge, true, WAVE_LIFESPAN));
 }
